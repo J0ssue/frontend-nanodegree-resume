@@ -20,7 +20,7 @@ const bio = {
 	welcomeMessage: HTMLwelcomeMsg, 
 	skillTitle: HTMLskillsStart,
 	skillLi: HTMLskills,
-	skills: ['JavaScript', 'HTML', 'CSS'],
+	skills: ['JavaScript', 'HTML', 'CSS', 'JQuery', 'jasmine', 'Gulp', 'Bootstrap', 'Linux', 'MVC'],
 	biopic: HTMLbioPic,
 	display: function() {
 		// ** Header ** //
