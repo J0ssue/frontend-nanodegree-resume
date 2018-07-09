@@ -92,6 +92,14 @@ a {
   display: block;
 }
 
+.contactLink {
+  display: inline;
+}
+
+.contactLink:hover {
+  color: aqua;
+}
+
 .welcome-message {
   font-style: italic;
   font-size: 18px;
