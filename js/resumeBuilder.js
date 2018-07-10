@@ -1,4 +1,20 @@
 const model = {
+	// bio data
+	bio: {
+		name : 'Josue Diaz',
+		role : 'Web Developer',
+		contact: {
+			mobile: '+351-924-252-686',
+			email: 'jdiaz66@icloud.com',
+			github: 'https://github.com/J0ssue',
+			linkedIn: 'Josue', 
+			location: 'Portugal',			
+		},
+		welcomeMessage: 'Hello, my name is Josue, I\'m a Software Developer. Welcome to my resume', 
+		skills: ['JavaScript', 'HTML', 'CSS', 'JQuery', 'jasmine', 'Gulp', 'Bootstrap', 'Linux', 'MVC'],
+		biopic:'images/josue.png',
+	},
+	// work data
 	jobs: [
 	{
 		employer: 'Adeco', 
@@ -43,6 +59,7 @@ const model = {
 		description: 'Forklift Driver.'
 	},
 	],
+	// projects data
 	projects: [
 	{
 		title: 'Arcade Game', 
@@ -51,6 +68,7 @@ const model = {
 		images: ['images/project1.png', 'images/project2.png'] 
 	}
 	],
+	// education data
 	schools: [
 	{
 		name: 'Rancho Verde High School',
@@ -73,10 +91,14 @@ const model = {
 
 let octopus = {
 	init: function() {
-		bio.init();
+		bio.display();
 		work.display();
 		projects.display();
 		education.display();
+		gMap.display();
+	},
+	getBio: function() {
+		return model.bio;
 	},
 	getWorkData: function() {
 		return model.jobs;
@@ -94,45 +116,48 @@ let octopus = {
 
 // ** Header ** //
 const bio = {
-	init: function() {
-		this.display();
-	},
-	name : HTMLheaderName,
-	role : HTMLheaderRole,
-	contacts : {
-		mobile: HTMLmobile,
-		email: HTMLemail,
-		github: HTMLgithub,
-		linkedIn: HTMLlinkedIn, 
-		location: HTMLlocation,
-	},
-	welcomeMessage: HTMLwelcomeMsg, 
-	skillTitle: HTMLskillsStart,
-	skillLi: HTMLskills,
-	skills: ['JavaScript', 'HTML', 'CSS', 'JQuery', 'jasmine', 'Gulp', 'Bootstrap', 'Linux', 'MVC'],
-	biopic: HTMLbioPic,
+	bio: octopus.getBio(),
 	display: function() {
 		// ** Header ** //
-		$('#header').prepend(this.role);
-		$('#header').prepend(this.name);
+		// name & role
+		let name = HTMLheaderName.replace('%data%', this.bio.name); 
+		let role = HTMLheaderRole.replace('%data%', this.bio.role); 
+		$('#header').prepend(role);
+		$('#header').prepend(name);
 
-		// Contacts/header
-		Object.values(this.contacts).forEach(function(contact) {
-			$('#topContacts').append(contact);
+		// contacts header
+		let number = HTMLmobile.replace('%data%', this.bio.contact.mobile);
+		let email = HTMLemail.replace('%data%', this.bio.contact.email);
+		let github = HTMLgithub.replace('%data%', this.bio.contact.github);
+		let linkedIn = HTMLlinkedIn.replace('%data%', this.bio.contact.linkedIn);
+		let location = HTMLlocation.replace('%data%', this.bio.contact.location);
+		$('#topContacts').append(number);
+		$('#topContacts').append(email);
+		$('#topContacts').append(github);
+		$('#topContacts').append(linkedIn);
+		$('#topContacts').append(location);
+		// contacts footer
+		$('#footerContacts').append(number);
+		$('#footerContacts').append(email);
+		$('#footerContacts').append(github);
+		$('#footerContacts').append(linkedIn);
+		$('#footerContacts').append(location);
+
+
+		// picture
+		let pic = HTMLbioPic.replace('%data%', this.bio.biopic);
+		$('#header').append(pic);
+
+		// welcome
+		let welcome = HTMLwelcomeMsg.replace('%data%', this.bio.welcomeMessage);
+		$('#header').append(welcome);
+
+		// skills
+		$('#header').append(HTMLskillsStart);
+		this.bio.skills.forEach(function(skill) {
+			let newSkill= HTMLskills.replace('%data%', skill);;
+			$('#skills').append(newSkill);
 		});
-
-		// Pic/header 
-		$('#header').append(this.biopic);
-
-		// welcome/header
-		$('#header').append(this.welcomeMessage);
-
-		// Skills/header
-		$('#header').append(this.skillTitle);
-		for (let i = 0; i < this.skills.length; i++) {
-		let replaceSkill = this.skillLi.replace('%data%', this.skills[i]);;
-			$('#skills').append(replaceSkill);
-		}
 	},
 }; 
 
@@ -216,6 +241,12 @@ let education = {
 				$('.education-entry').append(url);
 			});
 		}
+};
+
+let gMap = {
+	display: function() {
+		$('#mapDiv').append(googleMap);
+	}
 };
 
 octopus.init();
