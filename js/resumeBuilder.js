@@ -42,17 +42,54 @@ const model = {
 		dates: '2009 - 2010', 
 		description: 'Forklift Driver.'
 	},
-	]
+	],
+	projects: [
+	{
+		title: 'Arcade Game', 
+		dates: '2018',
+		description: 'This is a Udacity assignment built with vanilla Javascript, CSS, HTML and Bootstrap. To load the game type this link into your search bar https://j0ssue.github.io/Memory-Card-Game/',
+		images: ['images/project1.png', 'images/project2.png'] 
+	}
+	],
+	schools: [
+	{
+		name: 'Rancho Verde High School',
+		location: 'California, United States',
+		degree: 'High School Diploma',
+		majors: ['General Education'],
+		dates: '2004 - 2008',
+		// url: ''
+	}
+	],
+	onlineCourses: [
+	{
+		title: 'Front End Nanodegree',
+		school: 'Udacity',
+		dates: '2017 - in progress',
+		url: 'https://eu.udacity.com/course/front-end-web-developer-nanodegree--nd001',
+	}
+	],
 };
 
 let octopus = {
 	init: function() {
 		bio.init();
 		work.display();
+		projects.display();
+		education.display();
 	},
 	getWorkData: function() {
 		return model.jobs;
 	},
+	getProjectData: function() {
+		return model.projects;
+	},
+	getSchoolData: function() {
+		return model.schools;
+	},
+	getOnlineCourseData: function() {
+		return model.onlineCourses;
+	}
 };
 
 // ** Header ** //
@@ -100,7 +137,6 @@ const bio = {
 }; 
 
 // ** Work ** //
-
 let work = {
 	jobs: octopus.getWorkData(),
 	display: function() {
@@ -118,6 +154,68 @@ let work = {
 			$('.work-entry').append(description);
 		});
 	}
+};
+
+// ** Projects ** //
+let projects = {
+	// gets projects data from model
+	projects: octopus.getProjectData(),	
+	display: function() { 
+		// appends div element which holds all project entries
+		$('#projects').append(HTMLprojectStart);
+		this.projects.forEach(function(project) {
+			let title = HTMLprojectTitle.replace('%data%', project.title);
+			let dates = HTMLprojectDates.replace('%data%', project.dates);
+			let description = HTMLprojectDescription.replace('%data%', project.description);
+
+			// appends each element to the project entry div
+			$('.project-entry').append(title);
+			$('.project-entry').append(dates);
+			$('.project-entry').append(description);
+
+			// appends two images per project
+			for (let i = 0; i < 2; i++) {
+				let image = HTMLprojectImage.replace('%data%', project.images[i]);
+				$('.project-entry').append(image);
+			}
+		});
+	}
+}
+
+// ** Education ** //
+let education = {
+	schools: octopus.getSchoolData(),
+	onlineCourses: octopus.getOnlineCourseData(),
+	display: function() {
+			// ** displaying School:
+			$('#education').append(HTMLschoolStart);
+			this.schools.forEach(function(school) {
+				const name = HTMLschoolName.replace('%data%', school.name);
+				const degree = HTMLschoolDegree.replace('%data%', school.degree);
+				const dates = HTMLschoolDates.replace('%data%', school.dates);
+				const location = HTMLschoolLocation.replace('%data%', school.location);
+				$('.education-entry').append(name + degree);
+				$('.education-entry').append(dates);
+				$('.education-entry').append(location);
+
+				for (let i = 0; i < 1; i++) {
+					let major = HTMLschoolMajor.replace('%data%', school.majors[i]);
+					$('.education-entry').append(major);
+				}
+			});
+
+			// ** display Online courses:
+			$('.education-entry').append(HTMLonlineClasses);
+			this.onlineCourses.forEach(function(course) {
+				const title = HTMLonlineTitle.replace('%data%', course.title);
+				const school = HTMLonlineSchool.replace('%data%', course.school);
+				const date = HTMLonlineDates.replace('%data%', course.dates);
+				const url = HTMLonlineURL.replace('%data%', course.url);
+				$('.education-entry').append(title + school);
+				$('.education-entry').append(date);
+				$('.education-entry').append(url);
+			});
+		}
 };
 
 octopus.init();
